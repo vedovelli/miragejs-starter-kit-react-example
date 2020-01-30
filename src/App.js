@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
 
 function App() {
+  const [users, setUsers] = useState([]);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    /*
+     * In development Mirage JS will intercept all HTTP requests and respond with data.
+     * Check your browser console for more info.
+     */
+    fetch("api/users")
+      .then(res => res.json())
+      .then(({ users }) => {
+        setUsers(users);
+      });
+
+    fetch("api/products")
+      .then(res => res.json())
+      .then(({ products }) => {
+        setProducts(products);
+      });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Users</h2>
+      {users.length ? users.map(user => <p>{user.name}</p>) : null}
+      <hr />
+      <h2>Products</h2>
+      {products.length ? products.map(product => <p>{product.name}</p>) : null}
     </div>
   );
 }
