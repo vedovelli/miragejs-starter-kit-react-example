@@ -22,13 +22,33 @@ function App() {
       });
   }, []);
 
+  const getMessages = userId => {
+    fetch(`api/messages?userId=${userId}`)
+      .then(res => res.json())
+      .then(({ messages }) => {
+        console.log(messages);
+      });
+  };
+
   return (
     <div className="App">
       <h2>Users</h2>
-      {users.length ? users.map(user => <p>{user.name}</p>) : null}
+      {users.length
+        ? users.map(user => (
+            <p
+              style={{ cursor: "pointer" }}
+              key={user.id}
+              onClick={() => getMessages(user.id)}
+            >
+              {user.name}
+            </p>
+          ))
+        : null}
       <hr />
       <h2>Products</h2>
-      {products.length ? products.map(product => <p>{product.name}</p>) : null}
+      {products.length
+        ? products.map(product => <p key={product.id}>{product.name}</p>)
+        : null}
     </div>
   );
 }

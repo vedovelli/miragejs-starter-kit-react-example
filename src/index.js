@@ -3,10 +3,9 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { makeServer } from "./miragejs/server";
 
 if (process.env.NODE_ENV === "development") {
-  makeServer();
+  require("./miragejs/server").makeServer();
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));
